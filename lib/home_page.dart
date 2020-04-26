@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new WelcomeFragment();
+        return new WelcomeFragment(userId: widget.userId, auth: widget.auth,store: widget.store, onSignedOut: _signOut);
       case 1:
         return new ProfileFragment(
             userId: widget.userId, auth: widget.auth,store: widget.store, signOut: _signOut);
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: new AppBar(
-        title: new Text('Family App'),
+        title: new Text('WeFamily'),
         actions: <Widget>[
           new FlatButton(
               child: new Text('Logout',
