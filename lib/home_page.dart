@@ -15,7 +15,7 @@ class DrawerItem {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth,this.store, this.userId, this.onSignedOut})
+  HomePage({Key key, this.auth, this.store, this.userId, this.onSignedOut})
       : super(key: key);
 
   final BaseAuth auth;
@@ -48,12 +48,23 @@ class _HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new WelcomeFragment(userId: widget.userId, auth: widget.auth,store: widget.store, onSignedOut: _signOut);
+        return new WelcomeFragment(
+            userId: widget.userId,
+            auth: widget.auth,
+            store: widget.store,
+            onSignedOut: _signOut);
       case 1:
         return new ProfileFragment(
-            userId: widget.userId, auth: widget.auth,store: widget.store, signOut: _signOut);
+            userId: widget.userId,
+            auth: widget.auth,
+            store: widget.store,
+            signOut: _signOut);
       case 2:
-        return new WeFamilyUsersFragment();
+        return new WeFamilyUsersFragment(
+            userId: widget.userId,
+            auth: widget.auth,
+            store: widget.store,
+            signOut: _signOut);
 
       default:
         return new Text("Error");

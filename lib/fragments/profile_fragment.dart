@@ -37,6 +37,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
       print(e);
     }
   }
+
   _updateImagePath(String id, String path) async {
     try {
       await widget.store.updateImagePath(id, path);
@@ -44,6 +45,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
       print(e);
     }
   }
+
   Future chooseFile() async {
     await ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
       setState(() {
@@ -51,26 +53,26 @@ class _ProfileFragmentState extends State<ProfileFragment> {
       });
     });
   }
+
   Future _uploadFile() async {
-      StorageReference storageReference = FirebaseStorage.instance
-          .ref()
-          .child('profileimages/${Path.basename(_image.path)}}');
-      StorageUploadTask uploadTask = storageReference.putFile(_image);
-      await uploadTask.onComplete;
-      print('File Uploaded');
-      storageReference.getDownloadURL().then((fileURL) {
-        setState(() {
-          _uploadedFileURL = fileURL;
-        });
-        _updateImagePath(widget.userId, fileURL);
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('profileimages/${Path.basename(_image.path)}}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL;
       });
-      print('File _uploadedFileURL ' + _uploadedFileURL);
+      _updateImagePath(widget.userId, fileURL);
+    });
+    print('File _uploadedFileURL ' + _uploadedFileURL);
   }
 
   @override
   void initState() {
     super.initState();
-
     widget.store.getUserById(widget.userId).then((user) {
       print('current user ' + user.data["email"].toString());
       setState(() {
@@ -87,7 +89,6 @@ class _ProfileFragmentState extends State<ProfileFragment> {
             _uploadedFileURL = user.data["path"];
           });
         }
-
         print('_userId ' + user?.data["uid"].toString());
         print('_email ' + user?.data["email"].toString());
       });
