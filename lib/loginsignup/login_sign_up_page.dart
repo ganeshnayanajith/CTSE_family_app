@@ -21,6 +21,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
   String _email;
   String _password;
+  String _name;
   String _errorMessage = "";
 
   // this will be used to identify the form to show
@@ -35,16 +36,22 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         title: new Text("WeFamily"),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 5.0,left: 15.0,right: 15.0),
+        margin: EdgeInsets.only(top: 5.0, left: 15.0, right: 15.0),
         child: Form(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 logo(),
-                SizedBox(height: 10.0,),
-                formWidget(),
+                SizedBox(
+                  height: 10.0,
+                ),
+                _formMode == FormMode.LOGIN
+                    ? formWidgetLogin()
+                    : formWidgetSignUp(),
                 loginButtonWidget(),
                 secondaryButton(),
                 errorWidget(),
@@ -78,7 +85,20 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     );
   }
 
-  Widget formWidget() {
+  Widget formWidgetSignUp() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          _nameWidget(),
+          _emailWidget(),
+          _passwordWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget formWidgetLogin() {
     return Form(
       key: _formKey,
       child: Column(
@@ -109,6 +129,27 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
     );
   }
 
+  Widget _nameWidget() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.text,
+        autofocus: false,
+        decoration: new InputDecoration(
+          hintText: 'Enter Full Name',
+          icon: new Icon(
+            Icons.person,
+            color: Colors.grey,
+          ),
+        ),
+        validator: (value) =>
+            value.isEmpty ? 'Full name cannot be empty' : null,
+        onSaved: (value) => _name = value.trim(),
+      ),
+    );
+  }
+
   Widget _passwordWidget() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
@@ -117,11 +158,12 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Password',
-            icon: new Icon(
-              Icons.lock,
-              color: Colors.grey,
-            )),
+          hintText: 'Password',
+          icon: new Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ),
+        ),
         validator: (value) => value.isEmpty ? 'Password cannot be empty' : null,
         onSaved: (value) => _password = value.trim(),
       ),
@@ -130,34 +172,42 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
   Widget loginButtonWidget() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-        child: new MaterialButton(
-          elevation: 5.0,
-          minWidth: 200.0,
-          height: 42.0,
-          color: Colors.pink,
-          child: _formMode == FormMode.LOGIN
-              ? new Text('Login',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white))
-              : new Text('Create account',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-          onPressed: _validateAndSubmit,
-        ));
+      padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+      child: new MaterialButton(
+        elevation: 5.0,
+        minWidth: 200.0,
+        height: 42.0,
+        color: Colors.pink,
+        child: _formMode == FormMode.LOGIN
+            ? new Text(
+                'Login',
+                style: new TextStyle(fontSize: 20.0, color: Colors.white),
+              )
+            : new Text(
+                'Create account',
+                style: new TextStyle(fontSize: 20.0, color: Colors.white),
+              ),
+        onPressed: _validateAndSubmit,
+      ),
+    );
   }
 
   Widget secondaryButton() {
     return new FlatButton(
       child: _formMode == FormMode.LOGIN
-          ? new Text('Create an account',
-          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300))
-          : new Text('Have an account? Sign in',
-          style:
-          new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
-      onPressed: _formMode == FormMode.LOGIN ? showSignupForm : showLoginForm,
+          ? new Text(
+              'Create an account',
+              style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300),
+            )
+          : new Text(
+              'Have an account? Sign in',
+              style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300),
+            ),
+      onPressed: _formMode == FormMode.LOGIN ? showSignUpForm : showLoginForm,
     );
   }
 
-  void showSignupForm() {
+  void showSignUpForm() {
     _formKey.currentState.reset();
     _errorMessage = "";
     setState(() {
@@ -210,7 +260,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         if (_formMode == FormMode.LOGIN) {
           userId = await widget.auth.signIn(_email, _password);
         } else {
-          userId = await widget.auth.signUp(_email, _password);
+          userId = await widget.auth.signUp(_email, _password,_name);
         }
         setState(() {
           _isLoading = false;
