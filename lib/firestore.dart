@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 abstract class BaseStore {
   Future<DocumentSnapshot> getUserById(String id);
   Future<List<DocumentSnapshot>> getAllUsers();
-  Future<void> updateUser(String id,String name);
+  Future<void> updateUser(String id,String name,String age,String mobile);
   Future<void> updateImagePath(String id,String path);
 }
 
@@ -28,11 +28,11 @@ class Store implements BaseStore {
     return user;
   }
 
-  Future<void> updateUser(String id, String name) async {
+  Future<void> updateUser(String id, String name,String age,String mobile) async {
     await _fireStore
         .collection("users")
         .document(id)
-        .updateData({"name": name});
+        .updateData({"name": name,"age":age,"mobile":mobile});
   }
 
   Future<void> updateImagePath(String id, String path) async {

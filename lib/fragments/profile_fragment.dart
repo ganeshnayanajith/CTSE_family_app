@@ -25,14 +25,18 @@ class _ProfileFragmentState extends State<ProfileFragment> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailController;
   TextEditingController _nameController;
+  TextEditingController _ageController;
+  TextEditingController _mobileNumberController;
   String _userId = "";
   String _email = "";
+  String _age = "";
+  String _mobileNumber = "";
   File _image;
   String _uploadedFileURL;
 
-  _update(String id, String name) async {
+  _update(String id, String name,String age,String mobile) async {
     try {
-      await widget.store.updateUser(id, name);
+      await widget.store.updateUser(id, name,age,mobile);
     } catch (e) {
       print(e);
     }
@@ -77,17 +81,19 @@ class _ProfileFragmentState extends State<ProfileFragment> {
       print('current user ' + user.data["email"].toString());
       setState(() {
         if (user != null) {
-          _userId = user?.data["uid"];
-          _email = user?.data["email"];
+          _userId = user.data["uid"];
+          _email = user.data["email"];
+          _age = user.data["age"];
+          _uploadedFileURL = user.data["path"];
+          _mobileNumber = user.data["mobile"];
           _emailController =
               new TextEditingController(text: user?.data["email"].toString());
           _nameController =
               new TextEditingController(text: user.data["name"]?.toString());
-        }
-        if (user.data["path"] != null) {
-          setState(() {
-            _uploadedFileURL = user.data["path"];
-          });
+          _ageController =
+              new TextEditingController(text: user.data["age"]?.toString());
+          _mobileNumberController =
+              new TextEditingController(text: user.data["mobile"]?.toString());
         }
         print('_userId ' + user?.data["uid"].toString());
         print('_email ' + user?.data["email"].toString());
@@ -104,7 +110,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           print("widget.userId " + widget.userId);
           print("_nameController.text " + _nameController.text);
           _uploadFile();
-          _update(widget.userId, _nameController.text);
+          _update(widget.userId, _nameController.text,_ageController.text,_mobileNumberController.text);
 
           final snackBar = SnackBar(
             content: Text('Profile Updated'),
@@ -172,6 +178,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
               key: _formKey,
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   TextFormField(
                     controller: _emailController,
                     enabled: false,
@@ -185,6 +194,24 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     enabled: true,
                     decoration: const InputDecoration(
                       labelText: "Name",
+                      border: const UnderlineInputBorder(),
+                    ),
+                  ),
+                  TextFormField(
+                    controller: _ageController,
+                    enabled: true,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Age",
+                      border: const UnderlineInputBorder(),
+                    ),
+                  ),
+                  TextFormField(
+                    controller: _mobileNumberController,
+                    enabled: true,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Mobile Number",
                       border: const UnderlineInputBorder(),
                     ),
                   ),
