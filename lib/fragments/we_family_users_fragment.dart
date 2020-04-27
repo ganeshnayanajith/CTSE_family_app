@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
+import 'package:ctsefamilyapp/models/we_family_user.dart';
 import 'package:flutter/material.dart';
 
 class WeFamilyUsersFragment extends StatefulWidget {
@@ -22,28 +24,28 @@ class _WeFamilyUsersFragmentState extends State<WeFamilyUsersFragment> {
 
   @override
   Widget build(BuildContext context) {
-    return _myListView(context);
+    return Container(
+      child: FutureBuilder(
+          future: loadUsers(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Text("Loadding..."),
+              );
+            } else {
+              return _myListView(context, snapshot);
+            }
+          }),
+    );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    widget.store.getAllUsers().then((documents) {
-      documents.forEach((document) {
-        print('users list name ' + document.data["name"].toString());
-        print('users list path ' + document.data["path"].toString());
-        names.add(document.data["name"].toString());
-        document.data["path"] == null
-            ? imagePaths.add("null")
-            : imagePaths.add(document.data["path"].toString());
-      });
-    });
+  Future loadUsers() async {
+    return await widget.store.getAllUsers();
   }
 
-  Widget _myListView(BuildContext context) {
-    print('////////////////////////////////////////////');
+  Widget _myListView(BuildContext context, AsyncSnapshot snapshot) {
     return ListView.builder(
-      itemCount: names.length,
+      itemCount: snapshot.data.length,
       itemBuilder: (context, index) {
         return Card(
           child: ListTile(
@@ -54,9 +56,9 @@ class _WeFamilyUsersFragmentState extends State<WeFamilyUsersFragment> {
                 child: SizedBox(
                   width: 150.0,
                   height: 150.0,
-                  child: imagePaths[index] != "null"
+                  child: snapshot.data[index].data["path"] != "null"
                       ? Image.network(
-                          imagePaths[index],
+                          snapshot.data[index].data["path"],
                           fit: BoxFit.fill,
                         )
                       : Image(
@@ -65,7 +67,7 @@ class _WeFamilyUsersFragmentState extends State<WeFamilyUsersFragment> {
                 ),
               ),
             ),
-            title: Text(names[index]),
+            title: Text(snapshot.data[index].data["name"]),
           ),
         );
       },
