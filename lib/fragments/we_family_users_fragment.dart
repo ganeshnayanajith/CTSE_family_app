@@ -56,7 +56,7 @@ class _WeFamilyUsersFragmentState extends State<WeFamilyUsersFragment> {
                 child: SizedBox(
                   width: 150.0,
                   height: 150.0,
-                  child: snapshot.data[index].data["path"] != "null"
+                  child: snapshot.data[index].data["path"] == "null"
                       ? Image.network(
                           snapshot.data[index].data["path"],
                           fit: BoxFit.fill,

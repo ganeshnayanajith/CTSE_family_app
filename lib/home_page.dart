@@ -1,6 +1,7 @@
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:ctsefamilyapp/fragments/family_member_fragment.dart';
 import 'package:ctsefamilyapp/fragments/profile_fragment.dart';
+import 'package:ctsefamilyapp/fragments/settings_fragment.dart';
 import 'package:ctsefamilyapp/fragments/we_family_users_fragment.dart';
 import 'package:ctsefamilyapp/fragments/welcome_fragment.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class HomePage extends StatefulWidget {
   final drawerItems = [
     new DrawerItem("Home", Icons.home),
     new DrawerItem("Profile", Icons.person),
-    new DrawerItem("WeFamily Users", Icons.favorite)
+    new DrawerItem("WeFamily Users", Icons.favorite),
+    new DrawerItem("Settings", Icons.settings)
   ];
 
   @override
@@ -65,7 +67,12 @@ class _HomePageState extends State<HomePage> {
             auth: widget.auth,
             store: widget.store,
             signOut: _signOut);
-
+      case 3:
+        return new SettingsFragment(
+            userId: widget.userId,
+            auth: widget.auth,
+            store: widget.store,
+            signOut: _signOut);
       default:
         return new Text("Error");
     }

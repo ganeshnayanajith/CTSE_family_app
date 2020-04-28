@@ -6,7 +6,7 @@ abstract class BaseStore {
   Future<DocumentSnapshot> getUserById(String id);
 
   Future<List<DocumentSnapshot>> getAllUsers();
-  //Future<List<WeFamilyUser>> getAllUsers();
+  Future deleteUser(String uid);
 
   Future<void> updateUser(String id, String name, String age, String mobile);
 
@@ -16,34 +16,15 @@ abstract class BaseStore {
 class Store implements BaseStore {
   final Firestore _fireStore = Firestore.instance;
 
-  Future<List<DocumentSnapshot>> getAllUsers() async {
-    print("getAllUsers--------");
-    QuerySnapshot querySnapshot = await Firestore.instance.collection("users").getDocuments();
-
-    return querySnapshot.documents;
+  Future deleteUser(String uid) {
+    return _fireStore.collection("users").document(uid).delete();
   }
 
-  /*Future<List<WeFamilyUser>> getAllUsers() async {
-    print("getAllUsers--------");
-    List<WeFamilyUser> userList;
+  Future<List<DocumentSnapshot>> getAllUsers() async {
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection("users").getDocuments();
-    var list = querySnapshot.documents;
-    list.forEach((user) {
-      WeFamilyUser weFamilyUser = new WeFamilyUser(
-          uid: user.data["uid"],
-          name: user.data["name"],
-          path: user.data["path"]);
-    });
-    return userList;
-  }*/
-
-  /*Future<List<DocumentSnapshot>> getAllUsers() async {
-     print("getAllUsers--------");
-     QuerySnapshot querySnapshot = await Firestore.instance.collection("users").getDocuments();
-     var list = querySnapshot.documents;
-     return list;
-  }*/
+    return querySnapshot.documents;
+  }
 
   Future<DocumentSnapshot> getUserById(String id) async {
     var user = await _fireStore.collection("users").document(id).get();
