@@ -1,4 +1,5 @@
 import 'package:ctsefamilyapp/firestore.dart';
+import 'package:ctsefamilyapp/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:ctsefamilyapp/loginsignup/root_page.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
@@ -15,10 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.pink
       ),
-      home: RootPage(
-        auth: new Auth(),
-        store: new Store(),
-      ),
+      home: Splash(),
     );
   }
 }

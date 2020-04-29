@@ -14,7 +14,8 @@ abstract class BaseAuth {
 
   Future deleteUser(String id);
 
-  void changePassword(String userId, String password) {}
+
+  Future<void> resetPassword();
 }
 
 class Auth implements BaseAuth {
@@ -22,25 +23,20 @@ class Auth implements BaseAuth {
   final BaseStore store = new Store();
 
   @override
-  void changePassword(String userId, String password) async {
+  Future<void> resetPassword() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
-    print("999999999999999999999999999999");
-    user.updatePassword(password).then((onValue){
-      print("ssssssssssssssssssssssssssssss");
-    });
+    return await _firebaseAuth.sendPasswordResetEmail(email: user.email);
   }
 
   @override
   Future deleteUser(String uid) async {
     try {
       FirebaseUser user = await _firebaseAuth.currentUser();
+      print("/////////////////////"+uid);
       DocumentSnapshot userData = await store.getUserById(uid);
-      AuthCredential credentials = EmailAuthProvider.getCredential(
-          email: userData.data["email"], password: userData.data["password"]);
-      print(user);
-      AuthResult result = await user.reauthenticateWithCredential(credentials);
+      print("==============="+user.uid);
       await store.deleteUser(uid); // called from database class
-      await result.user.delete();
+      await user.delete();
       return true;
     } catch (e) {
       print(e.toString());
@@ -64,7 +60,6 @@ class Auth implements BaseAuth {
     await Firestore.instance.collection("users").document(user.uid).setData({
       "uid": user.uid,
       "email": email,
-      "password": password,
       "name": name,
     });
     print("user created in cloud firestore");

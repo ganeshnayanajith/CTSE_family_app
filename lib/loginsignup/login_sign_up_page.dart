@@ -52,10 +52,10 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                 _formMode == FormMode.LOGIN
                     ? formWidgetLogin()
                     : formWidgetSignUp(),
+                progressWidget(),
                 loginButtonWidget(),
                 secondaryButton(),
-                errorWidget(),
-                progressWidget()
+                errorWidget()
               ],
             ),
           ),
@@ -152,7 +152,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
 
   Widget _passwordWidget() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 8.0),
       child: new TextFormField(
         maxLines: 1,
         obscureText: true,
@@ -260,7 +260,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
         if (_formMode == FormMode.LOGIN) {
           userId = await widget.auth.signIn(_email, _password);
         } else {
-          userId = await widget.auth.signUp(_email, _password,_name);
+          userId = await widget.auth.signUp(_email, _password, _name);
         }
         setState(() {
           _isLoading = false;

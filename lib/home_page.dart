@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:ctsefamilyapp/fragments/family_member_fragment.dart';
 import 'package:ctsefamilyapp/fragments/profile_fragment.dart';
@@ -37,6 +39,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedDrawerIndex = 0;
+  String _email = "";
+  String _name = "";
+  String _uploadedFileURL;
 
   _signOut() async {
     try {
@@ -84,6 +89,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    widget.store.getUserById(widget.userId).then((user) {
+      setState(() {
+        if (user != null) {
+          print('current user ' + user.data["email"].toString());
+          _email = user.data["email"];
+          _name = user.data["name"];
+          _uploadedFileURL = user.data["path"];
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var drawerOptions = <Widget>[];
 
@@ -102,7 +122,17 @@ class _HomePageState extends State<HomePage> {
         child: new Column(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-                accountName: new Text("Ganesh Nayanajith"), accountEmail: null),
+              accountName: new Text(_name),
+              accountEmail: new Text(_email),
+              currentAccountPicture: (_uploadedFileURL != null)
+                  ? Image.network(
+                      _uploadedFileURL,
+                      fit: BoxFit.fill,
+                    )
+                  : Image(
+                      image: AssetImage('user.png'),
+                    ),
+            ),
             new Column(children: drawerOptions)
           ],
         ),
