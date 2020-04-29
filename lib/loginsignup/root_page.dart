@@ -5,7 +5,7 @@ import 'package:ctsefamilyapp/loginsignup/login_sign_up_page.dart';
 import 'package:ctsefamilyapp/home_page.dart';
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth,this.store});
+  RootPage({this.auth, this.store});
 
   final BaseAuth auth;
   final BaseStore store;

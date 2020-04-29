@@ -6,26 +6,37 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class BaseAuth {
   Future<String> signIn(String email, String password);
 
-  Future<String> signUp(String email, String password,String name);
+  Future<String> signUp(String email, String password, String name);
 
   Future<FirebaseUser> getCurrentUser();
 
   Future<void> signOut();
 
   Future deleteUser(String id);
+
+  void changePassword(String userId, String password) {}
 }
 
 class Auth implements BaseAuth {
-
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final BaseStore store=new Store();
+  final BaseStore store = new Store();
 
+  @override
+  void changePassword(String userId, String password) async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    print("999999999999999999999999999999");
+    user.updatePassword(password).then((onValue){
+      print("ssssssssssssssssssssssssssssss");
+    });
+  }
+
+  @override
   Future deleteUser(String uid) async {
     try {
       FirebaseUser user = await _firebaseAuth.currentUser();
       DocumentSnapshot userData = await store.getUserById(uid);
-      AuthCredential credentials =
-      EmailAuthProvider.getCredential(email:userData.data["email"] , password: userData.data["password"]);
+      AuthCredential credentials = EmailAuthProvider.getCredential(
+          email: userData.data["email"], password: userData.data["password"]);
       print(user);
       AuthResult result = await user.reauthenticateWithCredential(credentials);
       await store.deleteUser(uid); // called from database class
@@ -37,6 +48,7 @@ class Auth implements BaseAuth {
     }
   }
 
+  @override
   Future<String> signIn(String email, String password) async {
     FirebaseUser user = (await _firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password))
@@ -44,7 +56,8 @@ class Auth implements BaseAuth {
     return user.uid;
   }
 
-  Future<String> signUp(String email, String password,String name) async {
+  @override
+  Future<String> signUp(String email, String password, String name) async {
     FirebaseUser user = (await _firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password))
         .user;
@@ -52,17 +65,19 @@ class Auth implements BaseAuth {
       "uid": user.uid,
       "email": email,
       "password": password,
-      "name":name,
+      "name": name,
     });
     print("user created in cloud firestore");
     return user.uid;
   }
 
+  @override
   Future<FirebaseUser> getCurrentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     return user;
   }
 
+  @override
   Future<void> signOut() async {
     return _firebaseAuth.signOut();
   }
