@@ -1,8 +1,17 @@
+/*Created by IT17106016-Lokugamage G.N.
+This is a reference of https://www.javacodegeeks.com/2019/09/flutter-firebase-authentication-tutorial.html */
+
+//import packages
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:flutter/material.dart';
 import 'authentication.dart';
 import 'package:ctsefamilyapp/loginsignup/login_sign_up_page.dart';
 import 'package:ctsefamilyapp/home_page.dart';
+
+/*This is the first loading widget of the app. In here, load the current user using firebase.
+If user is null we set authStatus as LOGGED_OUT.
+Otherwise set LOGGED_IN. If authStatus equals to the LOGGED_OUT redirect to the login page.
+If authStatus equals to the LOGGED_IN redirect to the home page.*/
 
 class RootPage extends StatefulWidget {
   RootPage({this.auth, this.store});
@@ -14,16 +23,19 @@ class RootPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _RootPageState();
 }
 
+//enum class contains group of constants
 enum AuthStatus {
   NOT_DETERMINED,
   LOGGED_OUT,
   LOGGED_IN,
 }
 
+
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.LOGGED_OUT;
   String _userId = "";
 
+  //load the current user in the initial state of the widget
   @override
   void initState() {
     super.initState();
@@ -41,6 +53,7 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  //check the authStatus and redirect to the relevant page
   @override
   Widget build(BuildContext context) {
     switch (authStatus) {

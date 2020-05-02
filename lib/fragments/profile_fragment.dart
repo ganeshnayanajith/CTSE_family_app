@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+/*Created by IT17106016-Lokugamage G.N.*/
+
+//import packages
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
     }
   }
 
+  //using image picker set the picked image from gallery to the _image variable
   Future chooseFile() async {
     await ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
       setState(() {
@@ -58,6 +61,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
     });
   }
 
+  //create a instance of firebase storage and upload the image
   Future _uploadFile() async {
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
@@ -74,6 +78,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
     print('File _uploadedFileURL ' + _uploadedFileURL);
   }
 
+  //loads all user data to show in the profile page
   @override
   void initState() {
     super.initState();
@@ -112,6 +117,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           _uploadFile();
           _update(widget.userId, _nameController.text,_ageController.text,_mobileNumberController.text);
 
+          //show snack bar message after updating the profile
           final snackBar = SnackBar(
             content: Text('Profile Updated'),
           );
@@ -124,6 +130,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
+        //display user details in the relevant fields
         child: ListView(
           shrinkWrap: true,
           children: [

@@ -1,3 +1,6 @@
+/*Created by IT17106016-Lokugamage G.N.*/
+
+//import packages
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ctsefamilyapp/firestore.dart';
@@ -18,24 +21,26 @@ abstract class BaseAuth {
   Future<void> resetPassword();
 }
 
+
+/*This class handles the all authentication parts of the app using firebase authentication*/
 class Auth implements BaseAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final BaseStore store = new Store();
 
+  //send a password reset email to the current user's email address.
   @override
   Future<void> resetPassword() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     return await _firebaseAuth.sendPasswordResetEmail(email: user.email);
   }
 
+  //delete current user account from the firebase authentication and delete all data from firestore by uid
   @override
   Future deleteUser(String uid) async {
     try {
       FirebaseUser user = await _firebaseAuth.currentUser();
-      print("/////////////////////"+uid);
       DocumentSnapshot userData = await store.getUserById(uid);
-      print("==============="+user.uid);
-      await store.deleteUser(uid); // called from database class
+      await store.deleteUser(uid);
       await user.delete();
       return true;
     } catch (e) {

@@ -1,3 +1,6 @@
+/*Created by IT17106016-Lokugamage G.N.*/
+
+//import packages
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +20,7 @@ class SettingsFragment extends StatefulWidget {
   State<StatefulWidget> createState() => new _SettingsFragmentState();
 }
 
+//build a list view that includes all user settings
 class _SettingsFragmentState extends State<SettingsFragment> {
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class _SettingsFragmentState extends State<SettingsFragment> {
     );
   }
 
+  //show a dialog box when user clicks on change password list item
   void _showDialogPassword() {
     showDialog(
       context: context,
@@ -70,6 +75,7 @@ class _SettingsFragmentState extends State<SettingsFragment> {
     );
   }
 
+  //show a dialog box after user confirms the password change
   void _showDialogPasswordEmail() {
     showDialog(
       context: context,
@@ -90,6 +96,7 @@ class _SettingsFragmentState extends State<SettingsFragment> {
     );
   }
 
+  //show a dialog box when user clicks on delete account list item
   void _showDialog() {
     showDialog(
       context: context,
@@ -108,6 +115,7 @@ class _SettingsFragmentState extends State<SettingsFragment> {
             new FlatButton(
               child: new Text("Yes"),
               onPressed: () async {
+                //delete user data and user account
                 await widget.auth.deleteUser(widget.userId);
                 Navigator.of(context).pop();
                 SystemNavigator.pop();

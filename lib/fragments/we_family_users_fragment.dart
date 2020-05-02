@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+/*Created by IT17106016-Lokugamage G.N.*/
+
+//import packages
 import 'package:ctsefamilyapp/firestore.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
-import 'package:ctsefamilyapp/models/we_family_user.dart';
 import 'package:flutter/material.dart';
 
 class WeFamilyUsersFragment extends StatefulWidget {
@@ -25,6 +26,7 @@ class _WeFamilyUsersFragmentState extends State<WeFamilyUsersFragment> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      //before render the list items, load all users from database and pass to the _myListView
       child: FutureBuilder(
           future: loadUsers(),
           builder: (context, snapshot) {
@@ -39,10 +41,12 @@ class _WeFamilyUsersFragmentState extends State<WeFamilyUsersFragment> {
     );
   }
 
+  //load all users from the database
   Future loadUsers() async {
     return await widget.store.getAllUsers();
   }
 
+  //render the list item for each user with the name and profile image
   Widget _myListView(BuildContext context, AsyncSnapshot snapshot) {
     return ListView.builder(
       itemCount: snapshot.data.length,

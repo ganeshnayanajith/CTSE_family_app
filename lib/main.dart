@@ -1,18 +1,18 @@
-import 'package:ctsefamilyapp/firestore.dart';
+/*Created by IT17106016-Lokugamage G.N.*/
+
+//import packages
 import 'package:ctsefamilyapp/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:ctsefamilyapp/loginsignup/root_page.dart';
-import 'package:ctsefamilyapp/loginsignup/authentication.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Authentication AndroidVille',
+      title: 'WeFamily',
       theme: ThemeData(
           primarySwatch: Colors.pink
       ),

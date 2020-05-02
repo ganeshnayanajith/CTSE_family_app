@@ -1,5 +1,8 @@
+/*Created by IT17106016-Lokugamage G.N.
+This is a reference of https://www.javacodegeeks.com/2019/09/flutter-firebase-authentication-tutorial.html */
+
+//import packages
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
 
 import 'authentication.dart';
@@ -53,9 +56,9 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
                     ? formWidgetLogin()
                     : formWidgetSignUp(),
                 progressWidget(),
+                errorWidget(),
                 loginButtonWidget(),
-                secondaryButton(),
-                errorWidget()
+                secondaryButton()
               ],
             ),
           ),

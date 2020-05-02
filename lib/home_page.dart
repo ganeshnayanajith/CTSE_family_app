@@ -1,13 +1,12 @@
-import 'dart:io';
+/*Created by IT17106016-Lokugamage G.N.*/
 
+//import packages
 import 'package:ctsefamilyapp/firestore.dart';
-import 'package:ctsefamilyapp/fragments/family_member_fragment.dart';
 import 'package:ctsefamilyapp/fragments/profile_fragment.dart';
 import 'package:ctsefamilyapp/fragments/settings_fragment.dart';
 import 'package:ctsefamilyapp/fragments/we_family_users_fragment.dart';
 import 'package:ctsefamilyapp/fragments/welcome_fragment.dart';
 import 'package:flutter/material.dart';
-import 'package:ctsefamilyapp/widgets/nav_drawer.dart';
 import 'package:ctsefamilyapp/loginsignup/authentication.dart';
 
 class DrawerItem {
