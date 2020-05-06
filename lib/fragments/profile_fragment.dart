@@ -123,9 +123,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
 
           //show snack bar message after updating the profile
           final snackBar = SnackBar(
+            content: Text('Wait..Profile is Updating...'),
+          );
+          final snackBar2 = SnackBar(
             content: Text('Profile Updated'),
           );
           Scaffold.of(context).showSnackBar(snackBar);
+          Scaffold.of(context).showSnackBar(snackBar2);
         },
         child: Icon(
           Icons.save,
