@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of main page
+* */
 
 //import packages
 import 'package:ctsefamilyapp/splash.dart';
@@ -13,9 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'WeFamily',
-      theme: ThemeData(
-          primarySwatch: Colors.pink
-      ),
+      theme: ThemeData(primarySwatch: Colors.pink),
       home: Splash(),
     );
   }

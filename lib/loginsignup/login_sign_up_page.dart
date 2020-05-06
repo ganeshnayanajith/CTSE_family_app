@@ -1,5 +1,8 @@
-/*Created by IT17106016-Lokugamage G.N.
-This is a reference of https://www.javacodegeeks.com/2019/09/flutter-firebase-authentication-tutorial.html */
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of login and sign up page
+* This is a reference of https://www.javacodegeeks.com/2019/09/flutter-firebase-authentication-tutorial.html
+* */
 
 //import packages
 import 'package:flutter/material.dart';

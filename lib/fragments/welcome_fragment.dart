@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of welcome page
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';

@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of we family users list page
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';

@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of profile page
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';
@@ -36,9 +39,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
   File _image;
   String _uploadedFileURL;
 
-  _update(String id, String name,String age,String mobile) async {
+  _update(String id, String name, String age, String mobile) async {
     try {
-      await widget.store.updateUser(id, name,age,mobile);
+      await widget.store.updateUser(id, name, age, mobile);
     } catch (e) {
       print(e);
     }
@@ -115,7 +118,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           print("widget.userId " + widget.userId);
           print("_nameController.text " + _nameController.text);
           _uploadFile();
-          _update(widget.userId, _nameController.text,_ageController.text,_mobileNumberController.text);
+          _update(widget.userId, _nameController.text, _ageController.text,
+              _mobileNumberController.text);
 
           //show snack bar message after updating the profile
           final snackBar = SnackBar(

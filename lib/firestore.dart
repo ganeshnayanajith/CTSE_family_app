@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of firebase firestore
+* */
 
 //import packages
 import 'dart:async';
@@ -8,6 +11,7 @@ abstract class BaseStore {
   Future<DocumentSnapshot> getUserById(String id);
 
   Future<List<DocumentSnapshot>> getAllUsers();
+
   Future deleteUser(String uid);
 
   Future<void> updateUser(String id, String name, String age, String mobile);
@@ -15,6 +19,9 @@ abstract class BaseStore {
   Future<void> updateImagePath(String id, String path);
 }
 
+/*
+* This class handles the all operations related to the firebase firestore
+* */
 class Store implements BaseStore {
   final Firestore _fireStore = Firestore.instance;
 
@@ -30,6 +37,7 @@ class Store implements BaseStore {
     return querySnapshot.documents;
   }
 
+  //get a user document by using uid
   Future<DocumentSnapshot> getUserById(String id) async {
     var user = await _fireStore.collection("users").document(id).get();
     return user;

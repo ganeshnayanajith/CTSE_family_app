@@ -1,5 +1,8 @@
-/*Created by IT17106016-Lokugamage G.N.
-referenced code from https://morioh.com/p/98894cc3a48d */
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of splash screen
+* This is a referenced code from https://morioh.com/p/98894cc3a48d
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';
@@ -18,7 +21,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return new SplashScreen(
-      //Number of seconds splash screen shows
+        //Number of seconds splash screen shows
         seconds: 4,
         //After above defined seconds app navigate to the RootPage
         //pass the instance of Auth class and Store class to the RootPage by using constructor
@@ -39,4 +42,3 @@ class _SplashState extends State<Splash> {
         loaderColor: Colors.red);
   }
 }
-

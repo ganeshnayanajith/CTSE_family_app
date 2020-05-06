@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of firebase authentication
+* */
 
 //import packages
 import 'dart:async';
@@ -17,12 +20,12 @@ abstract class BaseAuth {
 
   Future deleteUser(String id);
 
-
   Future<void> resetPassword();
 }
 
-
-/*This class handles the all authentication parts of the app using firebase authentication*/
+/*
+* This class handles the all authentication parts of the app using firebase authentication
+* */
 class Auth implements BaseAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final BaseStore store = new Store();

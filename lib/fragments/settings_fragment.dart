@@ -1,4 +1,7 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of settings page
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';
@@ -82,7 +85,8 @@ class _SettingsFragmentState extends State<SettingsFragment> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: new Text("Email Sent Successfully"),
-          content: new Text("Password reset link sent to the email address successfully. Using that link you can change the password"),
+          content: new Text(
+              "Password reset link sent to the email address successfully. Using that link you can change the password"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Ok"),

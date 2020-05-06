@@ -1,5 +1,8 @@
-/*Created by IT17106016-Lokugamage G.N.
-This is a reference of https://www.javacodegeeks.com/2019/09/flutter-firebase-authentication-tutorial.html */
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of root page
+* This is a reference of https://www.javacodegeeks.com/2019/09/flutter-firebase-authentication-tutorial.html
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';
@@ -29,7 +32,6 @@ enum AuthStatus {
   LOGGED_OUT,
   LOGGED_IN,
 }
-
 
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.LOGGED_OUT;

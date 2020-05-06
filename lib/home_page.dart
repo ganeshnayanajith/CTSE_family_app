@@ -1,4 +1,8 @@
-/*Created by IT17106016-Lokugamage G.N.*/
+/*
+* Created by IT17106016-Lokugamage G.N.
+* Implementation of home page
+* Menu items implemented by Haritha Weerathunga
+* */
 
 //import packages
 import 'package:ctsefamilyapp/firestore.dart';
